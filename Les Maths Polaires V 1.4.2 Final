@@ -1,0 +1,372 @@
+"""               Made by Florain Marcoz and Malezieux Julien                """
+"""                          All Rights Reserved                             """
+""" Ajout de Nouveau tapis de jeu ---  Couleurs de fond
+    --- Ajout de commentaires et de structures ---                           """
+#IMPORT-------------------------------------------------------------------------
+from random import*
+from tkinter import*
+#FENETRE------------------------------------------------------------------------
+""" Taille de la fenêtre, nom de l'interface + version et couleur de fond """
+fen =Tk()
+fen.geometry("950x600")
+fen.title("Les Maths Polaires   |   V1.4.2 Final")
+fen.config(bg="#3D8771")
+#IMAGES-------------------------------------------------------------------------
+de1=PhotoImage(file="Images/d1.gif")
+de2=PhotoImage(file="Images/d2.gif")
+de3=PhotoImage(file="Images/d3.gif")
+de4=PhotoImage(file="Images/d4.gif")
+de5=PhotoImage(file="Images/d5.gif")
+de6=PhotoImage(file="Images/d6.gif")
+#VARIABLE-----------------------------------------------------------------------
+B = 0
+W = 0
+X = 0
+Y = 0
+Z = 0
+#FONCTION-----------------------------------------------------------------------
+#ACCEUIL------------------------------------------------------------------------
+def Page_Acceuil():
+    """ traceur """
+    print("Affichage ||  Page d'acceuil           || Ok")
+    #Boutons
+    """ Mise en place des boutons Regle, Lancer une partie et Graphique """
+    Regle = Button(fen,bg="#D27C8B",text="Comment jouer ?  ",command=Page_Regle,font=("calibri","15"))
+    Regle.place(x=100,y=200)
+    Lancer_Une_Partie = Button(fen,bg="#D27C8B",text="Lancer une partie  ",command=Page_Jeux,font=("calibri","15"))
+    Lancer_Une_Partie.place(x=100,y=250)
+    Graphique = Button(fen,bg="#D27C8B",text="Options graphique",command=Page_Graphics,font=("calibri","15"))
+    Graphique.place(x=100,y=300)
+    """ Variable à globaliser """
+    global Regle,Lancer_Une_Partie,Graphique
+#ACCEUIL_KILL-------------------------------------------------------------------
+def Page_Acceuil_Kill():
+    Regle.destroy()
+    Lancer_Une_Partie.destroy()
+    Graphique.destroy()
+#REGLE--------------------------------------------------------------------------
+def Page_Regle():
+    """ Lancement d'autre(s) fonction(s) """
+    Page_Acceuil_Kill()
+    """ traceur """
+    print("Affichage ||  Page Règle               || Ok")
+    """ textes """
+    tex0 = Label(fen, text="Comment jouer ?",bg="#3D8771",font=("calibri","20","bold","underline"))
+    tex0.place(x=70,y=145)
+    tex1 = Label(fen, text="Commençons par le plus facile; il est très simple de trouver le nombre de trous.",bg="#3D8771",font=("calibri","18"))
+    tex1.place(x=70,y=190)
+    tex2 = Label(fen, text="Ce sont les points centraux de chaque banquise. ( Ou face de dé )",bg="#3D8771",font=("calibri","18"))
+    tex2.place(x=70,y=225)
+    tex3 = Label(fen, text="Ensuite, sachez que les ours se situent autours des trous.",bg="#3D8771",font=("calibri","18"))
+    tex3.place(x=70,y=260)
+    tex4 = Label(fen, text="Enfin utilisez la propriété du dé à savoir que la somme de la face observable",bg="#3D8771",font=("calibri","18"))
+    tex4.place(x=70,y=295)
+    tex5 = Label(fen, text="plus la face caché est égal à 7, pour trouver le nombre de phoque",bg="#3D8771",font=("calibri","18"))
+    tex5.place(x=70,y=330)
+    Retour = Button(fen,text="Retour",bg="#D27C8B",command=Page_RegleKill,font=("calibri","15"))
+    Retour.place(x=630,y=500)
+    global tex0,tex1,tex2,tex3,tex4,tex5,Retour
+#REGLE_KILL---------------------------------------------------------------------
+def Page_RegleKill():
+    """ lancement d'autre(s) fonction(s) """
+    Page_Acceuil_Kill()
+    tex0.destroy()
+    tex1.destroy()
+    tex2.destroy()
+    tex3.destroy()
+    tex4.destroy()
+    tex5.destroy()
+    Retour.destroy()
+    Page_Acceuil()
+#GAME---------------------------------------------------------------------------
+def Page_Jeux():
+    """ lancement d'autre(s) fonction(s) """
+    Page_Acceuil_Kill()
+    """ traceur """
+    print("Affichage ||  Page Jeux                || Ok")
+    """ textes et boites de saisie """
+    #Ours
+    text1 = Label(fen, text="Insérez le nombre de Trou: ",bg="#3D8771")
+    text1.place(x=120,y=210)
+    reponse1=Entry(width=10)
+    reponse1.place(x=300,y=210)
+    #Phoques
+    text2 = Label(fen, text="Insérez le nombre d'Ours: ",bg="#3D8771")
+    text2.place(x=120,y=240)
+    reponse2=Entry(width=10)
+    reponse2.place(x=300,y=240)
+    #Trous
+    text3 = Label(fen, text="Insérez le nombre de Phoque: ",bg="#3D8771")
+    text3.place(x=120,y=270)
+    reponse3=Entry(width=10)
+    reponse3.place(x=300,y=270)
+    #Canvas
+    if B == 0:
+        can = Canvas(fen, width=250, height=250)
+        can.place(x=550, y=180)
+        can.configure(bg="skyblue")
+    elif B == 1:
+        can = Canvas(fen, width=250, height=250)
+        can.place(x=550, y=180)
+        can.configure(bg="#FE4747")
+    elif B == 2:
+        can = Canvas(fen, width=250, height=250)
+        can.place(x=550, y=180)
+        can.configure(bg="#B4D23A")
+    else:
+        print ("Erreur Graphique")
+    #Bouton
+    Retour = Button(fen,text="Retour",bg="#D27C8B",command=Page_JeuxKill1,font=("calibri","15"))
+    Retour.place(x=630,y=500)
+    Jouer = Button(fen,text="Jouer",bg="#D27C8B",command=play,font=("calibri","15"))
+    Jouer.place(x=550,y=500)
+    #Résultats
+    resultat1 = Label(fen, text=" ",bg="#3D8771")
+    resultat1.place(x=390,y=300)
+    resultat2 = Label(fen, text=" ",bg="#3D8771")
+    resultat2.place(x=390,y=330)
+    resultat3 = Label(fen, text=" ",bg="#3D8771")
+    resultat3.place(x=410,y=360)
+    #Correction
+    textTrou = Label(fen, text=" ",bg="#3D8771")
+    textTrou.place(x=70,y=300)
+    textOurs = Label(fen, text=" ",bg="#3D8771")
+    textOurs.place(x=70,y=330)
+    textPhoque = Label(fen, text=" ",bg="#3D8771")
+    textPhoque.place(x=70,y=360)
+    global text1,text2,text3,reponse1,reponse2,reponse3,can,Retour,Jouer
+    global resultat1,resultat2,resultat3,textOurs,textPhoque,textTrou
+def Page_JeuxKill1():
+    text1.destroy()
+    reponse1.destroy()
+    resultat1.destroy()
+    text2.destroy()
+    reponse2.destroy()
+    resultat2.destroy()
+    text3.destroy()
+    reponse3.destroy()
+    resultat3.destroy()
+    textOurs.destroy()
+    textPhoque.destroy()
+    textTrou.destroy()
+    Jouer.destroy()
+    can.destroy()
+    Retour.destroy()
+    #Fonction
+    Page_Acceuil()
+def Page_JeuxKill2():
+    text1.destroy()
+    reponse1.destroy()
+    resultat1.destroy()
+    text2.destroy()
+    reponse2.destroy()
+    resultat2.destroy()
+    text3.destroy()
+    reponse3.destroy()
+    resultat3.destroy()
+    can.destroy()
+    Retour.destroy()
+    Jouer.destroy()
+    textOurs.destroy()
+    textPhoque.destroy()
+    textTrou.destroy()
+    Recommencer.destroy()
+    Counter.destroy()
+    CounterWin.destroy()
+    CounterLose.destroy()
+    CounterTotal.destroy()
+    Page_Acceuil()
+#GRAPHIQUE----------------------------------------------------------------------
+def Page_Graphics():
+    """ traceur """
+    print("Affichage ||  Page graphique           || Ok")
+    global vert,fondBan,fond
+    texte0 = Label(fen,bg="#3D8771",text="Paramètres :",font=("calibri","18","bold","underline"))
+    texte0.place(x=50,y=140)
+    canvas= Label(fen,bg="#3D8771",text="Tapis de jeu",font=("calibri","15"))
+    canvas.place(x=120,y=180)
+    canvasBleu = Button(fen,bg="skyblue",text="         ",command=CanvasBleu)
+    canvasBleu.place(x=120,y=220)
+    canvasRouge = Button(fen,bg="#FE4747",text="         ",command=CanvasRouge)
+    canvasRouge.place(x=170,y=220)
+    canvasVert = Button(fen,bg="#B4D23A",text="         ",command=CanvasVert)
+    canvasVert.place(x=220,y=220)
+    Retour = Button(fen,bg="#D27C8B",text="Retour",command=Page_GraphicsKill,font=("calibri","15"))
+    Retour.place(x=630,y=500)
+    Page_Acceuil_Kill()
+    global texte0,Retour,canvas,canvasBleu,canvasRouge,canvasVert
+#GRAPHIQUE_KILL-----------------------------------------------------------------
+def Page_GraphicsKill():
+    texte0.destroy()
+    canvas.destroy()
+    canvasBleu.destroy()
+    canvasRouge.destroy()
+    canvasVert.destroy()
+    Retour.destroy()
+    Page_Acceuil()
+#SOUS_GRAPHIQUE-----------------------------------------------------------------
+def CanvasBleu():
+    B = 0
+    global B
+def CanvasRouge():
+    B = 1
+    global B
+def CanvasVert():
+    B = 2
+    global B
+#LAUNCHER_GAME-------------------------------------------------------------------
+def play():
+    cube()
+    Counter = Label(fen,text="Compteur:  Win  |  Lose |  Total",bg="#3D8771")
+    Counter.place(x=80, y=390)
+    CounterWin = Label(fen,text=Z,bg="#3D8771")
+    CounterWin.place(x=150, y=410)
+    CounterLose = Label(fen,text=W,bg="#3D8771")
+    CounterLose.place(x=185, y=410)
+    CounterTotal = Label(fen,text=X,bg="#3D8771")
+    CounterTotal.place(x=220, y=410)
+    verification = Button(fen,bg="#D27C8B",text="Vérifier ?", command=verifG,font=("calibri","11"))
+    verification.place(x=380,y=235)
+    Retour.destroy()
+    Jouer.destroy()
+    global Counter,CounterLose,CounterTotal,CounterWin,verification
+#BANQUISE-----------------------------------------------------------------------
+def cube():
+    ours = 0
+    trou = 0
+    phoque = 0
+    i = 0
+    while i != 3 :
+        cube1 = randint(1,6)
+        if i == 0:
+            x = 50
+            y = 50
+        elif i == 1:
+            x = 125
+            y = 125
+        elif i == 2:
+            x = 200
+            y = 200
+        if cube1 == 1:
+            ours = ours + 0
+            phoque = phoque + 6
+            trou = trou + 1
+            face1=can.create_image(x, y, image=de1)
+        elif cube1 == 2:
+            ours = ours + 2
+            phoque = phoque + 5
+            trou = trou + 0
+            face2=can.create_image(x, y, image=de2)
+        elif cube1 == 3:
+            ours = ours + 2
+            phoque = phoque + 4
+            trou = trou + 1
+            face3=can.create_image(x, y, image=de3)
+        elif cube1 == 4:
+            ours = ours + 4
+            phoque = phoque + 3
+            trou = trou + 0
+            face4=can.create_image(x, y, image=de4)
+        elif cube1 == 5:
+            ours = ours + 4
+            phoque = phoque + 2
+            trou = trou + 1
+            face5 = can.create_image(x, y, image=de5)
+        elif cube1 == 6:
+            ours = ours + 6
+            phoque = phoque + 1
+            trou = trou + 0
+            face6=can.create_image(x, y, image=de6)
+        i = i+1
+    global ours,phoque,trou
+#VERIFICATION-------------------------------------------------------------------
+def verifG():
+    Y = 0
+    """ Lancement d'autre(s) fonction(s) """
+    #TROUS
+    rep1 = str(reponse1.get())
+    rep1 = int(rep1)
+    if rep1==trou:
+        textTrou.config(text="Félicitations ! Vous avez trouvé le bon nombre de Trous !",font=("calibri","11"))
+        Y = Y + 1
+    else:
+        textTrou.config(text="La réponse qu'il fallait trouver pour les trous était:",font=("calibri","11"))
+        resultat1.config(text=trou)
+        Y = Y - 1
+    #OURS
+    rep2 = str(reponse2.get())
+    rep2 = int(rep2)
+    if rep2==ours:
+        textOurs.config(text="Félicitations ! Vous avez trouvé le bon nombre d'Ours !",font=("calibri","11"))
+        Y = Y + 1
+    else:
+        textOurs.config(text="La réponse qu'il fallait trouver pour les ours était:",font=("calibri","11"))
+        resultat2.config(text=ours)
+        Y = Y - 1
+    #PHOQUE
+    rep3 = str(reponse3.get())
+    rep3 = int(rep3)
+    if rep3==phoque:
+        textPhoque.config(text="Félicitations ! Vous avez trouvé le bon nombre de Phoque !",font=("calibri","11"))
+        Y = Y + 1
+    else:
+        textPhoque.config(text="La réponse qu'il fallait trouver pour les phoques était:",font=("calibri","11"))
+        resultat3.config(text=phoque)
+        Y = Y - 1
+    #BOUTON
+    """ Mise en place des boutons retour et recommencer """
+    Retour = Button(fen,bg="#D27C8B",text="Retour",command=Page_JeuxKill2,font=("calibri","15"))
+    Retour.place(x=630,y=500)
+    Recommencer = Button(fen,bg="#D27C8B",text="Recommencer",command=restart,font=("calibri","15"))
+    Recommencer.place(x=480,y=500)
+    """ le bouton vérifier disparait """
+    verification.destroy()
+    Compteur()
+    global Retour,Recommencer,Y
+#recommencer à jouer
+def restart():
+    Recommencer.destroy()
+    play()
+#Compteur de la partie
+def Compteur():
+    """ X désigne le compteur total """
+    X = X + 1
+    """ Z est le compteur de victoire, W est le compteur de défaite """
+    if Y == 3:
+        """ Si le joueur a un score de 3 (pour 3 bonnes réponses) alors la variable Z gagne un point """
+        Z = Z + 1
+        """ Traceur """
+        print("   Game   ||  Le joueur a juste        || Compteur Win = ",Z)
+    else:
+        """ Si le joueur n'a pas un score de 3, alors la variable W gagne un point """
+        W = W + 1
+        """ Traceur """
+        print("   Game   ||  Le joueur a faux         || Compteur Lose = ",W)
+    """ Modification des valeurs dans le compteur """
+    CounterWin.config(text=Z)
+    CounterLose.config(text=W)
+    CounterTotal.config(text=X)
+    """ Variable à globaliser """
+    global Z,W,X
+#Lanceur du programme
+""" Le lanceur sert à lancer une fonction au démarrage """
+a = 1
+if a == 1:
+    """ Le Programme dit qu'il est opérationnel """
+    print("Programme ||  Les Maths Polaires       || Chargement 100%")
+    """ Le Traceur dit qu'il est opérationnel """
+    print("Advanced  ||  Traceurs                 || Chargement 100%")
+    Page_Acceuil()
+else:
+    """ Traceur """
+    print("Erreur    ||  Chargement échoué        || Fermeture de la fenêtre [ Voir la variable a de LANCEMENT ]")
+    fen.destroy()
+#Partie affiché sur toutes les pages
+""" Titre """
+Titre = Label(fen,text="Les Maths Polaires",bg="red",font=("calibri","45","underline"))
+Titre.place(x=50,y=20)
+""" Bouton """
+Sortie = Button(fen, text="Quitter le jeu.",bg="#D27C8B", command = fen.destroy,font=("calibri","15"))
+Sortie.place(x=720,y=500)
+#Fin du programme
+fen.mainloop()
